@@ -272,6 +272,7 @@ export const addOrder = async (req: Request, res: Response) => {
     const order = new Order({
       tableNumber,
       customerId,
+      customerName: customerId,
       items,
       status: "pending",
       totalAmount,
