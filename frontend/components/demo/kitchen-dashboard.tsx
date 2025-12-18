@@ -513,8 +513,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import toast from "react-hot-toast";
+import { api } from "../../app/libs/api";
 
 interface OrderItem {
   name: string;
@@ -555,7 +555,7 @@ export default function KitchenDashboard({ onBack }: { onBack?: () => void }) {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token");
 
-        const res = await axios.get("http://localhost:5000/api/auth/me", {
+        const res = await api.get("/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -576,7 +576,7 @@ export default function KitchenDashboard({ onBack }: { onBack?: () => void }) {
   // Fetch orders
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/orders");
+      const response = await api.get("/orders");
       const activeOrders = response.data.filter(
         (order: Order) => order.status !== "served"
       );
@@ -613,7 +613,7 @@ export default function KitchenDashboard({ onBack }: { onBack?: () => void }) {
         );
       }
 
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, {
+      await api.put(`/orders/${orderId}/status`, {
         status: newStatus,
       });
 
@@ -631,7 +631,7 @@ export default function KitchenDashboard({ onBack }: { onBack?: () => void }) {
     const original = [...orders];
     try {
       setOrders(orders.filter((o) => o._id !== orderId));
-      await axios.delete(`http://localhost:5000/api/orders/${orderId}`);
+      await api.delete(`/orders/${orderId}`);
       toast.success("Order cancelled");
       fetchOrders();
     } catch (err) {

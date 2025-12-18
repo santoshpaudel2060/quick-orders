@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { toast } from "react-hot-toast";
+import { api } from "../libs/api";
 
 type FormData = {
   name: string;
@@ -25,10 +25,7 @@ export default function Signup() {
   // React Query mutation for signup
   const signupMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        data
-      );
+      const response = await api.post("/auth/register", data);
       return response.data;
     },
     onSuccess: (data) => {

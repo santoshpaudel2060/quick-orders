@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import axios from "axios";
-
-const API_BASE_URL = "http://localhost:5000/api";
+import { api } from "@/app/libs/api";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -27,9 +25,7 @@ export default function PaymentSuccess() {
         }
 
         // Verify payment with backend
-        const response = await axios.get(
-          `${API_BASE_URL}/payment/verify?data=${data}`
-        );
+        const response = await api.get(`/payment/verify?data=${data}`);
 
         if (response.data.success) {
           setVerified(true);

@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import toast from "react-hot-toast";
+import { api } from "../libs/api";
 
 type FormData = {
   email: string;
@@ -23,10 +23,7 @@ export default function Login() {
   // React Query mutation for login
   const loginMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        data
-      );
+      const response = await api.post("/auth/login", data);
       return response.data;
     },
 

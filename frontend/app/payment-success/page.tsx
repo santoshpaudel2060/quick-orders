@@ -101,7 +101,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "../libs/api";
 
 export default function PaymentSuccess() {
   const [loading, setLoading] = useState(true);
@@ -137,8 +137,8 @@ export default function PaymentSuccess() {
       }
 
       // Call your backend to get tableNumber and free the table
-      axios
-        .post("http://localhost:5000/api/tables/free-by-uuid", {
+      api
+        .post("/tables/free-by-uuid", {
           transactionUuid,
         })
         .then((res) => {
