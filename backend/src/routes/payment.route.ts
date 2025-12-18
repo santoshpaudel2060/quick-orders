@@ -899,8 +899,11 @@ router.get("/success", async (req: Request, res: Response) => {
     );
     console.log("eSewa verification:", verificationResponse.data);
 
+
+    // Type guard for verificationResponse.data
     let status: "completed" | "failed" = "failed";
-    if (verificationResponse.data.status === "COMPLETE") {
+    const verificationData = verificationResponse.data as { status?: string };
+    if (typeof verificationData === 'object' && verificationData !== null && 'status' in verificationData && verificationData.status === "COMPLETE") {
       status = "completed";
     }
 
