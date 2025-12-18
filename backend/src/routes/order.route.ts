@@ -21,7 +21,7 @@ router.post("/generate-qr", generatePaymentQR);
 
 // Get orders - BOTH endpoints for compatibility
 router.get("/", getAllOrders); // This one works with: /api/orders
-router.get("/all", getAllOrders); // This one works with: /api/orders/all
+router.get("/all", getAllOrders); // This one works with: /api/orders/allw
 
 router.get("/table/:tableNumber", getTableOrders);
 
